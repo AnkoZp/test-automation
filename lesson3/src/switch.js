@@ -1,4 +1,4 @@
-const randomNumber = Math.floor(Math.random() * 8) + 1;; // Random number between 1 and 7
+const randomNumber = Math.floor(Math.random() * 8) + 1;; // Random number between 1 and 8
 
 console.log('Your lucky number today is:', randomNumber);
 switch (randomNumber) {
