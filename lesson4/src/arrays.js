@@ -62,3 +62,30 @@ console.log('Numbers ↑:', sortedNumbersAsc);
 // Sort numbers descending
 const sortedNumbersDesc = [...numbers].sort((a, b) => b - a);
 console.log('Numbers ↓:', sortedNumbersDesc);
+
+// ---------------------- reduce() ----------------------
+// Sum of numbers
+const sum = numbers.reduce((acc, curr) => acc + curr, 0);
+console.log('Sum of numbers:', sum);
+
+// Find the longest word
+const longestWord = strings.reduce((longest, current) =>
+    current.length > longest.length ? current : longest
+, '');
+console.log('Longest string:', longestWord);
+
+// ---------------------- includes() ----------------------
+console.log('Does strings include "Monday"?', strings.includes('Monday'));
+console.log('Does numbers include 100?', numbers.includes(100));
+
+// ---------------------- push() and pop() ----------------------
+const fruits = ['blue', 'yellow'];
+fruits.push('green');   // add element at the end
+console.log('After push:', fruits);
+
+const lastFruit = fruits.pop();  // remove last element
+console.log('After pop:', fruits, '| Removed:', lastFruit);
+
+// ---------------------- indexOf() ----------------------
+console.log('Index of "Friday":', strings.indexOf('Friday'));
+console.log('Index of 91 in numbers:', numbers.indexOf(91));
