@@ -18,4 +18,4 @@ function processData(data) {
     console.log('Data received and processed:', data);
 }
 
-fetchData('https://jsonplaceholder.typicode.com/posts/1');
+fetchData('https://jsonplaceholder.typicode.com/posts/1').then();

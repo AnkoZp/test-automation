@@ -17,4 +17,4 @@ function processData(data) {
     console.log('Data received and processed:', data);
 }
 
-fetchData('https://jsonplaceholder.typicode.com/posts/1');
+await fetchData('https://jsonplaceholder.typicode.com/posts/1');
