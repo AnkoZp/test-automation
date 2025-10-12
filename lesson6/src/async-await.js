@@ -17,5 +17,4 @@ function processData(data) {
     console.log('Data received and processed:', data);
 }
 
-// Виклик функції
 fetchData('https://jsonplaceholder.typicode.com/posts/1');

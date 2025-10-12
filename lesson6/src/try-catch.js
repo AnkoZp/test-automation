@@ -29,7 +29,7 @@ async function fetchWithFallback(primaryUrl, fallbackUrl) {
     }
 }
 
-// Виклик з неіснуючим і робочим ресурсом
+// Call with non-existent and working resource
 fetchWithFallback(
     'https://thisurldoesnotexist.com/api/data',
     'https://jsonplaceholder.typicode.com/posts/1'
