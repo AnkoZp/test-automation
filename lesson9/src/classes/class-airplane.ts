@@ -1,11 +1,16 @@
 import { BaseTransport } from './class-base-transport';
+import { iFlyable } from '../abstraction/i-flyable';
 
-export class Airplane extends BaseTransport {
+export class Airplane extends BaseTransport implements iFlyable {
     private altitude: number;
 
     public constructor(model: string, maxSpeed: number) {
         super('Airplane', model, maxSpeed);
         this.altitude = 0;
+    }
+
+    public getAltitude(): number {
+        return this.altitude;
     }
 
     public takeOff(): void {

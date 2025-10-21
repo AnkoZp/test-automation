@@ -1,27 +1,39 @@
-import { BaseTransport } from './class-base-transport';
+import { Car } from './class-car';
+import { IRechargeable } from '../abstraction/i-rechargeable';
 
-export class ElectricCar extends BaseTransport {
-    private batteryLevel: number;
+export class ElectricCar extends Car implements IRechargeable {
+    private _batteryLevel: number;
 
     public constructor(model: string, maxSpeed: number, batteryLevel: number) {
-        super('Electric Car', model, maxSpeed);
-        this.batteryLevel = batteryLevel;
+        super(model, maxSpeed);
+        this.type = 'Electric Car';
+        this._batteryLevel = batteryLevel;
+    }
+
+    public get batteryLevel(): number {
+        return this._batteryLevel;
+    }
+
+    public charge(): void {
+        this._batteryLevel = 100;
+        console.log(`${this.model}: charged to 100%.`);
+    }
+
+    public discharge(amount: number): void {
+        this._batteryLevel -= amount;
+        if (this.batteryLevel < 0) this._batteryLevel = 0;
+        console.log(`${this.model}: battery is discharged to ${this._batteryLevel}%.`);
     }
 
     public startEngine(): void {
-        if (this.batteryLevel <= 0) {
+        if (this._batteryLevel <= 0) {
             console.log(`${this.model}: no charge, can't start engine.`);
         } else {
             super.startEngine();
         }
     }
 
-    public charge(): void {
-        this.batteryLevel = 100;
-        console.log(`${this.model}: charged to 100%.`);
-    }
-
     public getInfo(): string {
-        return `${super.getInfo()} Battery charge: ${this.batteryLevel}%.`;
+        return `${super.getInfo()} Battery charge: ${this._batteryLevel}%.`;
     }
 }
