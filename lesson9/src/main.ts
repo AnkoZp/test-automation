@@ -1,4 +1,4 @@
-import { Transport } from './abstraction/interfaces';
+import { Transport } from './abstraction/i-transport';
 import { Car } from './classes/class-car';
 import { ElectricCar } from './classes/class-electrical-car';
 import { Airplane } from './classes/class-airplane';

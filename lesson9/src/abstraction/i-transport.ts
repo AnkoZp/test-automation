@@ -1,4 +1,4 @@
-export interface Transport {
+export interface ITransport {
     type: string;
     model: string;
     maxSpeed: number;

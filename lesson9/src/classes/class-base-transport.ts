@@ -1,6 +1,6 @@
-import { Transport } from '../abstraction/interfaces';
+import { ITransport } from '../abstraction/i-transport';
 
-export abstract class BaseTransport implements Transport {
+export abstract class BaseTransport implements ITransport {
     public type: string;
     public model: string;
     public maxSpeed: number;
