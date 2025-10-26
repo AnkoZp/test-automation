@@ -44,11 +44,6 @@ describe('ElectricCar class tests', () => {
         expect(tesla.batteryLevel).to.equal(0);
     });
 
-    after(() => {
-        console.log(`after globalThis.minCharg = ${globalThis.minCharg}`);
-        globalThis.minCharg = undefined;
-    });
-
     it('the getInfo method must return correct information', () => {
         const info = tesla.getInfo();
         expect(info).to.include('Tesla Model 3');
