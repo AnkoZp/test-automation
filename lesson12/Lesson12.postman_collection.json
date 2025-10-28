@@ -1,0 +1,453 @@
+{
+	"info": {
+		"_postman_id": "b0e752a6-c399-41c3-8c37-0bea2981e4b8",
+		"name": "Lesson12",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6241897",
+		"_collection_link": "https://test-automation-team-8873.postman.co/workspace/test-automation~1589b527-a3ce-4f75-805b-cc707538ae74/collection/6241897-b0e752a6-c399-41c3-8c37-0bea2981e4b8?action=share&source=collection_link&creator=6241897"
+	},
+	"item": [
+		{
+			"name": "Get joke types",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const expectedTypeList = expectedTypes = ['general', 'knock-knock', 'programming', 'dad'];\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response contains a list of available jokes type\", function () {\r",
+							"    const responseJson = pm.response.json();\r",
+							"    const expectedTypeList = ['general', 'knock-knock', 'programming', 'dad'];\r",
+							"\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(responseJson).to.deep.equal(expectedTypeList);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/types",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab a random joke",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the correct top-level structure and types\", function () {\r",
+							"    // 2. Assert the top level is an object\r",
+							"    pm.expect(responseJson).to.be.an('object', 'Response should be a JSON object.');\r",
+							"\r",
+							"    // 3. Check for mandatory top-level properties and their types\r",
+							"    pm.expect(responseJson).to.have.property('type').that.is.a('string');\r",
+							"    pm.expect(responseJson).to.have.property('setup').that.is.an('string');\r",
+							"    pm.expect(responseJson).to.have.property('punchline').that.is.an('string');\r",
+							"    pm.expect(responseJson).to.have.property('id').that.is.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/random_joke",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"random_joke"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab a random joke2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the correct top-level structure and types\", function () {\r",
+							"    pm.expect(responseJson).to.be.an('object', 'Response should be a JSON object.');\r",
+							"\r",
+							"    pm.expect(responseJson).to.have.property('type').that.is.a('string');\r",
+							"    pm.expect(responseJson).to.have.property('setup').that.is.an('string');\r",
+							"    pm.expect(responseJson).to.have.property('punchline').that.is.an('string');\r",
+							"    pm.expect(responseJson).to.have.property('id').that.is.a('number');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/random",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"random"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab ten random jokes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const elementCount = responseJson.length;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain 10 random jokes\", () => {\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(elementCount).to.equal(10);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/random_ten",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"random_ten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab ten random jokes2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const elementCount = responseJson.length;\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain 10 random jokes\", () => {\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(elementCount).to.equal(10);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/ten",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"ten"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab any number of random jokes",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const actualElementCount = responseJson.length;\r",
+							"const expectedElementCount = Number(pm.collectionVariables.get(\"any-number\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain expected number of random jokes: \" + expectedElementCount, () => {\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(actualElementCount).to.equal(expectedElementCount);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/random/{{any-number}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"random",
+						"{{any-number}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab jokes by type",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const elementCount = responseJson.length;\r",
+							"const expectedJokeType = String(pm.collectionVariables.get(\"jokeType\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain 1 joke with specific type \" + expectedJokeType, () => {\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(elementCount).to.equal(1);\r",
+							"    pm.expect(responseJson[0].type).to.eql(expectedJokeType);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/{{jokeType}}/random",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"{{jokeType}}",
+						"random"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab joke by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const elementCount = responseJson.length;\r",
+							"const expectedJokeId = Number(pm.collectionVariables.get(\"id\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain 1 joke with id \" + expectedJokeId, () => {\r",
+							"    pm.expect(responseJson).to.have.property('id').that.equals(expectedJokeId);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/{{id}}",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"{{id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Grab jokes by type2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseJson = pm.response.json();\r",
+							"const elementCount = responseJson.length;\r",
+							"const expectedJokeType = String(pm.collectionVariables.get(\"jokeType\"));\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response array should contain 10 jokes with specific type \" + expectedJokeType, () => {\r",
+							"    pm.expect(responseJson).to.be.an('array');\r",
+							"    pm.expect(elementCount).to.equal(10);\r",
+							"    pm.expect(responseJson[0].type).to.eql(expectedJokeType);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/jokes/{{jokeType}}/ten",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"jokes",
+						"{{jokeType}}",
+						"ten"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": ""
+		},
+		{
+			"key": "any-number",
+			"value": ""
+		},
+		{
+			"key": "jokeType",
+			"value": ""
+		},
+		{
+			"key": "id",
+			"value": ""
+		},
+		{
+			"key": "typeList",
+			"value": ""
+		}
+	]
+}
