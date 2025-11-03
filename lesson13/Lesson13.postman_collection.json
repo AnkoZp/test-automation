@@ -534,6 +534,7 @@
 									"    const responseJson = pm.response.json();\r",
 									"    pm.expect(responseJson.id).to.not.be.empty;\r",
 									"    pm.collectionVariables.set(\"imageId\", responseJson.id);\r",
+									"    pm.collectionVariables.set(\"imageUrl\", responseJson.url);\r",
 									"});"
 								],
 								"type": "text/javascript",
@@ -745,6 +746,17 @@
 									"pm.test(\"Created_at should contain today's date\", function () {\r",
 									"    const today = new Date().toISOString().split(\"T\")[0];\r",
 									"    pm.expect(jsonData.created_at).to.contain(today);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check integration image and vote apis\", function () {\r",
+									"    const expectedId = pm.collectionVariables.get(\"imageId\");\r",
+									"    const expectedUrl = pm.collectionVariables.get(\"imageUrl\");\r",
+									"    const imageObject = jsonData.image;\r",
+									"    \r",
+									"    pm.expect(imageObject).to.be.an('object', \"'image' property should be an object.\");\r",
+									"    \r",
+									"    pm.expect(imageObject).to.have.property('id').that.is.a('string').to.eql(String(expectedId));\r",
+									"    pm.expect(imageObject).to.have.property('url').that.is.a('string').to.eql(String(expectedUrl));\r",
 									"});"
 								],
 								"type": "text/javascript",
@@ -876,6 +888,17 @@
 									"pm.test(\"Created_at should contain today's date\", function () {\r",
 									"    const today = new Date().toISOString().split(\"T\")[0];\r",
 									"    pm.expect(jsonData.created_at).to.contain(today);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check integration image and favourit apis\", function () {\r",
+									"    const expectedId = pm.collectionVariables.get(\"imageId\");\r",
+									"    const expectedUrl = pm.collectionVariables.get(\"imageUrl\");\r",
+									"    const imageObject = jsonData.image;\r",
+									"    \r",
+									"    pm.expect(imageObject).to.be.an('object', \"'image' property should be an object.\");\r",
+									"    \r",
+									"    pm.expect(imageObject).to.have.property('id').that.is.a('string').to.eql(String(expectedId));\r",
+									"    pm.expect(imageObject).to.have.property('url').that.is.a('string').to.eql(String(expectedUrl));\r",
 									"});"
 								],
 								"type": "text/javascript",
@@ -1076,6 +1099,10 @@
 		},
 		{
 			"key": "apiCatToken",
+			"value": ""
+		},
+		{
+			"key": "imageUrl",
 			"value": ""
 		}
 	]
