@@ -6,11 +6,18 @@ export class TheCatVoteApi {
     public constructor(private readonly apiService: IApiService<Response>) {}
 
     public async voteImage(imageId: string, subId: string, value: number): Promise<[Response, VoteDto]> {
-        const body = JSON.stringify({
+        // Add validation
+        if (!imageId) {
+            throw new Error('image_id is required');
+        }
+
+        const body = {
             image_id: imageId,
             sub_id: subId,
             value: value
-        });
+        };
+
+        console.log('Vote request payload:', JSON.stringify(body));
 
         const response = await this.apiService.post('/votes', body);
 
@@ -36,9 +43,22 @@ export class TheCatVoteApi {
 
     public async getVoteById(voteId: string): Promise<[Response, VoteDto]> {
         const response = await this.apiService.getById('/votes', voteId);
-        const vote = await response.json();
+        const contentType = response.headers.get('content-type');
 
-        return [response, vote];
+        let vote: any;
+        if (contentType && contentType.includes('application/json')) {
+            vote = await response.json();
+        } else {
+            const text = await response.text();
+            console.warn(' Non-JSON response:', text);
+            vote = { error: text };
+        }
+
+        if (vote && typeof vote.id === 'number') {
+            vote.id = String(vote.id);
+        }
+
+        return [response, vote as VoteDto];
     }
 
     public async deleteVoteById(voteId: string): Promise<Response> {

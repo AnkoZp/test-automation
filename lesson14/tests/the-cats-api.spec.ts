@@ -34,6 +34,7 @@ describe('The Cats API integration test', () => {
 
             uploadedImageJson = json;
             imageId = json.id;
+            console.log('Uploaded image id:', imageId);
         });
 
         test('check that image was uploaded', async () => {
@@ -49,6 +50,9 @@ describe('The Cats API integration test', () => {
             expect(uploadedImage?.url).toBe(uploadedImageJson.url);
             expect(uploadedImage?.original_filename).toBe(uploadedImageJson.original_filename);
             expect(uploadedImage?.sub_id).toBe(uploadedImageJson.sub_id);
+
+            imageId = uploadedImageJson.id;
+            console.log('Uploaded image id:', imageId);
         });
 
         test('vote for the image', async () => {

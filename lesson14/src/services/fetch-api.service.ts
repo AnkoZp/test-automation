@@ -20,7 +20,7 @@ export class FetchApiService implements IApiService<Response> {
         });
     }
 
-    public async getById(uri: string, id: string, headers?: Record<string, string>): Promise<Response> {
+    public async getById(uri: string, id: string | number, headers?: Record<string, string>): Promise<Response> {
         const defaultHeaders = this.getDefaultHeaders(headers);
         const url = `${this.baseUrl}${uri}/${id}`;
         return await fetch(url, {
@@ -32,10 +32,20 @@ export class FetchApiService implements IApiService<Response> {
     public async post(uri: string, body: unknown, headers?: Record<string, string>): Promise<Response> {
         const defaultHeaders = this.getDefaultHeaders(headers);
 
+        const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
+        const isString = typeof body === 'string';
+
+        const finalHeaders = { ...defaultHeaders } as Record<string, string>;
+        if (!isFormData && !isString && !finalHeaders['Content-Type']) {
+            finalHeaders['Content-Type'] = 'application/json';
+        }
+
+        const payload = isFormData ? (body as FormData) : isString ? (body as string) : JSON.stringify(body);
+
         return await fetch(`${this.baseUrl}${uri}`, {
             method: 'POST',
-            body: JSON.stringify(body),
-            headers: defaultHeaders
+            body: payload as any,
+            headers: finalHeaders
         });
     }
     public async postForm(uri: string, formData: FormData, headers?: Record<string, string>): Promise<Response> {
@@ -50,10 +60,20 @@ export class FetchApiService implements IApiService<Response> {
     public async put(uri: string, body: unknown, headers?: Record<string, string>): Promise<Response> {
         const defaultHeaders = this.getDefaultHeaders(headers);
 
+        const isFormData = typeof FormData !== 'undefined' && body instanceof FormData;
+        const isString = typeof body === 'string';
+
+        const finalHeaders = { ...defaultHeaders } as Record<string, string>;
+        if (!isFormData && !isString && !finalHeaders['Content-Type']) {
+            finalHeaders['Content-Type'] = 'application/json';
+        }
+
+        const payload = isFormData ? (body as FormData) : isString ? (body as string) : JSON.stringify(body);
+
         return await fetch(`${this.baseUrl}${uri}`, {
             method: 'PUT',
-            body: JSON.stringify(body),
-            headers: defaultHeaders
+            body: payload as any,
+            headers: finalHeaders
         });
     }
 
@@ -61,7 +81,7 @@ export class FetchApiService implements IApiService<Response> {
         const defaultHeaders = this.getDefaultHeaders(headers);
         const url = `${this.baseUrl}${uri}/${id}`;
         return await fetch(url, {
-            method: 'GET',
+            method: 'DELETE',
             headers: defaultHeaders
         });
     }
