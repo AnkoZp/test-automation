@@ -62,7 +62,6 @@ describe('The Cats API integration test', () => {
             expect(json).toBeDefined();
             expect(json.id).toBeDefined();
 
-            //votedImageJson = json;
             voteId = String(json.id);
         });
 
@@ -74,6 +73,15 @@ describe('The Cats API integration test', () => {
             expect(json.id).toBeDefined();
             expect(json.id).toBe(voteId);
             expect(json.image_id).toBe(imageId);
+
+            // Additional integration checks for vote.image
+            expect(json.image).toBeDefined();
+            expect(typeof json.image).toBe('object');
+            // id and url should be strings and match the uploaded image
+            expect(typeof json.image.id).toBe('string');
+            expect(json.image.id).toBe(String(imageId));
+            expect(typeof json.image.url).toBe('string');
+            expect(json.image.url).toBe(String(uploadedImageJson.url));
         });
 
         test('favourite the image', async () => {
@@ -82,7 +90,6 @@ describe('The Cats API integration test', () => {
             expect(json).toBeDefined();
             expect(json.id).toBeDefined();
 
-            //favouritedImageJson = json;
             favouriteId = String(json.id);
         });
 
@@ -94,6 +101,27 @@ describe('The Cats API integration test', () => {
             expect(json.id).toBeDefined();
             expect(json.id).toBe(favouriteId);
             expect(json.image_id).toBe(imageId);
+
+            // Additional integration checks for favourite.image
+            expect(json.image).toBeDefined();
+            expect(typeof json.image).toBe('object');
+            // id and url should be strings and match the uploaded image
+            expect(typeof json.image.id).toBe('string');
+            expect(json.image.id).toBe(String(imageId));
+            expect(typeof json.image.url).toBe('string');
+            expect(json.image.url).toBe(String(uploadedImageJson.url));
+        });
+
+        test('delete the image', async () => {
+            const response = await catsImages.deleteImage(imageId);
+            expect(response.ok).toBeTruthy();
+        });
+
+        test('check that image was deleted', async () => {
+            const getResponse = await fetchApiService.getById('/images', imageId);
+            expect(getResponse.status).toBe(400);
+            const text = await getResponse.text();
+            expect(text).toBe("Couldn't find an image matching the passed 'id' of " + imageId);
         });
     });
 });

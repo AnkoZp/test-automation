@@ -36,4 +36,10 @@ export class TheCatImageApi {
 
         return [response, image];
     }
+
+    public async deleteImage(imageId: string): Promise<Response> {
+        const response = await this.apiService.delete('/images', imageId);
+
+        return response;
+    }
 }
