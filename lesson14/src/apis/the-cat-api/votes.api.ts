@@ -6,7 +6,6 @@ export class TheCatVoteApi {
     public constructor(private readonly apiService: IApiService<Response>) {}
 
     public async voteImage(imageId: string, subId: string, value: number): Promise<[Response, VoteDto]> {
-        // Add validation
         if (!imageId) {
             throw new Error('image_id is required');
         }

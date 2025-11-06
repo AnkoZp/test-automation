@@ -4,11 +4,7 @@ import { FetchApiService } from '../src/services/fetch-api.service';
 import { TheCatImageApi } from '../src/apis/the-cat-api/images.api';
 import { ImageDto } from '../src/models/the-cats-api/image.dto';
 import { TheCatVoteApi } from '../src/apis/the-cat-api/votes.api';
-//import { VoteDto } from '../src/models/the-cats-api/votes.dto';
 import { TheCatFavoureApi } from '../src/apis/the-cat-api/favourites.api';
-//import { FavouritesDto } from '../src/models/the-cats-api/favourites.dto';
-//import { world } from '../src/hooks/vitest-global-setup';
-
 describe('The Cats API integration test', () => {
     const config = (new ConfigService()).getConfig();
     const fetchApiService = new FetchApiService(config.api.theCatsApi.baseUrl, { apiKey: config.auth?.theCatsApi?.apiKey });
@@ -19,9 +15,7 @@ describe('The Cats API integration test', () => {
 
     let uploadedImageJson: ImageDto;
     let imageId: string;
-    //let votedImageJson: VoteDto;
     let voteId : string;
-    //let favouritedImageJson: FavouritesDto;
     let favouriteId : string;
 
     describe('upload image tests', () => {

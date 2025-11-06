@@ -47,9 +47,6 @@ export class ConfigService {
             theCatsApi: {
                 baseUrl: 'https://api.thecatapi.com/v1'
             },
-            // jira: {
-            //     baseUrl: 'https://levkoniuk.atlassian.net/rest/api/3'
-            // },
             rd: {
                 baseUrl: 'https://lms.academius.io/',
                 loginUrl: 'https://lms.robotdreams.cc/login'
