@@ -1,0 +1,66 @@
+ID,Title,Precondition,Steps,Expected result
+NP-TC-001,Check that a list of available branches/parcel box is returned for the selected city,Go to https://novaposhta.ua/ (eng version),"1. Click on the 'Send' (//nav[contains(@class,'app-menu-desktop')]//div[contains(text(),'Send')]) header's menu element 
+and click on the 'The nearest branch'  (//div[@class='app-header-menu']//a[contains(@href,'/departments')] OR //div[@plerdy-tracking-id=""61156379301""])
+2. Click on the 'Select city' (//p[contains(text(),'Select city')])
+3. Inpit 'Zaporizhzhia' in the 'Settlement' field (//input[contains(@placeholder,'Settlement')]) 
+and/OR select 'city Zaporizhzhia' from the list (//ul/li//div[contains(text(),'Zaporizhzhia')])","1. User is redirected to the https://novaposhta.ua/en/departments with map and of the closes branches 
+2. The list of the popular cities are opened
+3. The list and  a card with branches of selected city is shown. The first address in the list should conatins info about the city - //ul/li//div//p[contains(text(),'Zaporizhia')]"
+NP-TC-002,Calculating the cost of delivery between two cities,"Go to https://novaposhta.ua/ (eng version)
+* unput datat for the test 
+","1. 1. Click on the 'Send' (//nav[contains(@class,'app-menu-desktop')]//div[contains(text(),'Send')]) header's menu element 
+and click on the 'The shipping cost'  (//div[@plerdy-tracking-id=""11879535101""])
+2. Field the all mandatory field in the Calculator form:
+* From //input[@aria-label=""City of departure""]
+* To //input[@aria-label=""Delivery city""]
+*Type of Service (drop down list):
+      * Type of send //label[@for=""f_0345784c-652c-4c6a-b634-e3e71e904a80""] > Select division //div[@id=""f_0345784c-652c-4c6a-b634-e3e71e904a80_0""]
+       * Type of receipt //label[@for=""f_79e1ecb7-1545-4796-8bc5-2c0181dc03a5""] > Select division //div[@id=""f_79e1ecb7-1545-4796-8bc5-2c0181dc03a5_1""]
+* Size and type of parcel (drop down list):
+      * Choose size and type //label[@for=""f_8ec9043c-dd47-4dcc-b88a-2b3c66a85ad0""] > Select Own Dimensions //div[@id=""f_8ec9043c-dd47-4dcc-b88a-2b3c66a85ad0_1""]
+       * Filed Actual weight //input[@id='f_ab414eca-2100-41bb-b507-2eacdf67af77']
+       * Filed Length //input[@id='f_07d2e8f3-5351-4b65-ad55-1bc7e8a93c3d']
+       * Filed Width //input[@id='f_07d2e8f3-5351-4b65-ad55-1bc7e8a93c3d']
+       * Filed Height //input[@id='f_dd92009b-1281-42f7-aae2-e0b4729480ac']
+* Payment datails  //input[@id='f_550017f7-82dd-4c37-a902-51b041e4ae57']
+* Add packaging - disable //div[@role='switch']
+3. Click Calculate btn //button[contains(@class,'calculate-button')]",3. The Estimated cost is calculated for the specified parameters in the form
+NP-TC-003,Tracking a parcel by TTN number,"Go to https://novaposhta.ua/ (eng version)
+There is a valid track number:  '20400012345678'","1. Enter the TTN number in the field on the main page. //form[@id=""main-page-search""]//input[contains(@placeholder,'parcel number')]
+2.Click Track btn (//button//span[text()='Track'])","2. The user is redirected to the page https://novaposhta.ua/en/tracking/{{TTN}}
+On the page should be available info about parcel and track number can be found by xpath //div[contains(@class,'items-center')]//span[contains(text(),'6437')]"
+,,,,
+,,,,
+,,,,
+,Test data for test 2,,Bug - invalid eng veriosn of the city Zaporizhzhia (Запоріжжя),
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+, ,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,, ,,
