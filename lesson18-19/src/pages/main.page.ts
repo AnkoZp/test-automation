@@ -1,4 +1,4 @@
-import { Locator, Page} from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class MainPage extends BasePage {
@@ -7,6 +7,8 @@ export class MainPage extends BasePage {
     private readonly logOffLink: Locator;
     private readonly languageSelect: Locator;
     private readonly currencySelect: Locator;
+    private readonly invalidCredentialsAlert: Locator;
+    private readonly productPrice: Locator;
 
     public constructor(page: Page) {
         super(page, 'https://demo.solomono.net');
@@ -15,23 +17,25 @@ export class MainPage extends BasePage {
         this.logOffLink = page.locator('//div[@class="enter_registration"]//*[@href="logoff.php"]');
         this.languageSelect = page.locator('//button[@class="language-dropdown-button"]');
         this.currencySelect = page.locator('//form[@name="currencies"]//*[contains(@class,"selectize-input")]');
+        this.invalidCredentialsAlert = page.locator('//div[@role="alert"]');
+        this.productPrice = page.locator('//p[@class="price"]/span');
     }
 
-    public async isLogIntoAccDisplayed(): Promise<boolean> {
+    public async expectLogIntoAccDisplayed(): Promise<void> {
         await this.logIntoAccLink.waitFor({ state: 'visible', timeout: 5000 });
-        return this.logIntoAccLink.isVisible();
+        await expect(this.logIntoAccLink).toBeVisible();
     }
 
-    public async isLogOffDisplayed(): Promise<boolean> {
-        return this.logOffLink.isVisible();
+    public async expectLogOffDisplayed(): Promise<void> {
+        await expect(this.logOffLink).toBeVisible();
     }
 
-    public async isLanguageSelectorDisplayed(): Promise<boolean> {
-        return this.languageSelect.isVisible();
+    public async expectLanguageSelectorDisplayed(): Promise<void> {
+        await expect(this.languageSelect).toBeVisible();
     }
 
-    public async isCurrencySelectDisplayed(): Promise<boolean> {
-        return this.currencySelect.isVisible();
+    public async expectCurrencySelectDisplayed(): Promise<void> {
+        await expect(this.currencySelect).toBeVisible();
     }
 
     public async pressLogIntoAcc(): Promise<void> {
@@ -53,5 +57,13 @@ export class MainPage extends BasePage {
         await this.currencySelect.click();
         await this.page.locator(`//div[@class='selectize-dropdown-content']//*[@data-value='${currency}']`).click();
         await this.page.waitForTimeout(2000);
+    }
+
+    public async expectVarningForInvalifLogIn(): Promise<void> {
+        await expect(this.invalidCredentialsAlert).toBeVisible();
+    }
+
+    public async getProductPriceLocator(): Promise<Locator> {
+        return await this.productPrice;
     }
 }

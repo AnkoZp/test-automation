@@ -1,5 +1,4 @@
 import { Page } from '@playwright/test';
-
 export class BasePage {
     protected readonly page: Page;
     protected readonly baseUrl?: string;
@@ -24,7 +23,7 @@ export class BasePage {
         return await this.page.url();
     }
 
-    public async sleep(timeMs: number): Promise<void> {
+    public async waitForTimeout(timeMs: number): Promise<void> {
         await this.page.waitForTimeout(timeMs);
     }
 }

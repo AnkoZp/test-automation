@@ -11,15 +11,15 @@ test.describe('Currency and language', () => {
     });
 
     test('Check elements on the Main page', async ({ page }) => {
-        await expect(await mainPage.getPageURL()).toContain('https://demo.solomono.net');
-        await expect(await mainPage.isCurrencySelectDisplayed()).toBe(true);
-        await expect(await mainPage.isLanguageSelectorDisplayed()).toBe(true);
+        await expect(page).toHaveURL(/https:\/\/demo\.solomono\.net\/?/);
+        await mainPage.expectCurrencySelectDisplayed();
+        await mainPage.expectLanguageSelectorDisplayed();
     });
 
     test('Change currency and language', async ({ page }) => {
         await mainPage.setCurrency('EUR');
-        const productPrice = page.locator('//p[@class="price"]/span');
-        await expect(productPrice.first()).toContainText('€');
+        const productPrice = (await mainPage.getProductPriceLocator()).first();
+        await expect(productPrice).toHaveText(/€/);
 
         await mainPage.setLanguage('pl');
         await expect(await mainPage.getPageURL()).toContain('pl/');

@@ -16,9 +16,9 @@ test.describe('Log in / log out', () => {
     });
 
     test('Check elements on the Login page', async ({ page }) => {
-        await expect(await loginPage.isEmailFieldDisplayed()).toBe(true);
-        await expect(await loginPage.isPasswordFieldDisplayed()).toBe(true);
-        await expect(await loginPage.isLoginButtonDisplayed()).toBe(true);
+        await loginPage.expectEmailFieldDisplayed();
+        await loginPage.expectPasswordFieldDisplayed();
+        await loginPage.expectLogInBtnDisplayed();
     });
 
     test('Login as registered user', async ({ page }) => {
@@ -26,12 +26,16 @@ test.describe('Log in / log out', () => {
         await loginPage.fillPasswordField(credentials.password);
         await loginPage.pressLoginButton();
 
-        await expect(await mainPage.isLogOffDisplayed()).toBe(true);
+        await mainPage.expectLogOffDisplayed();
+
         await expect(await mainPage.getPageTitle()).toContain('Solomono Template demo');
+        await expect(page).toHaveTitle(/Solomono Template demo/);
+
         await expect(await mainPage.getPageURL()).toContain('https://demo.solomono.net');
+        await expect(page).toHaveURL(/https:\/\/demo\.solomono\.net\/?/);
 
         await mainPage.pressLogOff();
-        await expect(await mainPage.isLogIntoAccDisplayed()).toBe(true);
+        await mainPage.expectLogIntoAccDisplayed();
     });
 
     test('Login with invalid credentials', async ({ page }) => {
@@ -40,9 +44,9 @@ test.describe('Log in / log out', () => {
         await loginPage.pressLoginButton();
 
         await expect(await mainPage.getPageURL()).toContain('/login.php?action=process');
+        await expect(page).toHaveURL(/\/login\.php\?action=process/);
 
-        const errorMessage = page.locator('//div[@role="alert"]');
-        await expect(errorMessage).toBeVisible();
-        await expect(await mainPage.isLogIntoAccDisplayed()).toBe(true);
+        await mainPage.expectVarningForInvalifLogIn();
+        await mainPage.expectLogIntoAccDisplayed();
     });
 });

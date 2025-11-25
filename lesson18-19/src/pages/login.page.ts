@@ -1,7 +1,8 @@
-import { Locator, Page } from '@playwright/test';
+import { Locator, Page, expect } from '@playwright/test';
 import { BasePage } from './base.page';
 
 export class LoginPage extends BasePage {
+
     private readonly emailField: Locator;
     private readonly passwordField: Locator;
     private readonly loginButton: Locator;
@@ -13,27 +14,28 @@ export class LoginPage extends BasePage {
         this.loginButton = page.locator('//form[@name="login"]//button[@type="submit"]');
     }
 
-    public async isEmailFieldDisplayed(): Promise<boolean> {
-        return this.emailField.isVisible();
+    public async expectEmailFieldDisplayed(): Promise<void> {
+        await expect(this.emailField).toBeVisible();
     }
 
-    public async isPasswordFieldDisplayed(): Promise<boolean> {
-        return this.passwordField.isVisible();
+    public async expectPasswordFieldDisplayed(): Promise<void> {
+        await expect(this.passwordField).toBeVisible();
     }
 
-    public async isLoginButtonDisplayed(): Promise<boolean> {
-        return this.loginButton.isVisible();
+    public async expectLogInBtnDisplayed(): Promise<void> {
+        await expect(this.loginButton).toBeVisible();
     }
 
     public async fillEmailField(email: string): Promise<void> {
-        await this.emailField.fill(email);
+        return this.emailField.fill(email);
     }
 
     public async fillPasswordField(password: string): Promise<void> {
-        await this.passwordField.fill(password);
+        return this.passwordField.fill(password);
     }
 
     public async pressLoginButton(): Promise<void> {
-        await this.loginButton.click();
+        return this.loginButton.click();
     }
 }
+
