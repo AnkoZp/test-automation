@@ -9,6 +9,7 @@ export class MainPage extends BasePage {
     private readonly currencySelect: Locator;
     private readonly invalidCredentialsAlert: Locator;
     private readonly productPrice: Locator;
+    private readonly addProductToCartButton: Locator;
 
     public constructor(page: Page) {
         super(page, 'https://demo.solomono.net');
@@ -19,6 +20,7 @@ export class MainPage extends BasePage {
         this.currencySelect = page.locator('//form[@name="currencies"]//*[contains(@class,"selectize-input")]');
         this.invalidCredentialsAlert = page.locator('//div[@role="alert"]');
         this.productPrice = page.locator('//p[@class="price"]/span');
+        this.addProductToCartButton = page.locator('//span/a[contains(@class,"added2cart")]');
     }
 
     public async expectLogIntoAccDisplayed(): Promise<void> {
@@ -65,5 +67,18 @@ export class MainPage extends BasePage {
 
     public async getProductPriceLocator(): Promise<Locator> {
         return await this.productPrice;
+    }
+
+    public async addProductToCart(): Promise<void> {
+        const button = this.addProductToCartButton.first();
+        await button.scrollIntoViewIfNeeded();
+        await button.waitFor({ state: 'visible', timeout: 10000 });
+        await this.page.screenshot({ path: 'debug3.png' });
+        await button.click();
+        await this.page.waitForTimeout(500);
+    }
+
+    public async expectAddProductToCartButtonDisplayed(): Promise<void> {
+        await expect(this.addProductToCartButton).toBeVisible();
     }
 }

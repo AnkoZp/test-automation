@@ -1,4 +1,7 @@
 import { Page } from '@playwright/test';
+import { CategoriesMenuComponents } from 'src/components/categories-menu.components';
+import { CartModalComponent } from 'src/components/cart-modal.component';
+
 export class BasePage {
     protected readonly page: Page;
     protected readonly baseUrl?: string;
@@ -6,6 +9,8 @@ export class BasePage {
     public constructor(page: Page, baseUrl?: string) {
         this.page = page;
         this.baseUrl = baseUrl;
+        this.categoriesMenuComponents = new CategoriesMenuComponents(page);
+        this.cartModalComponent = new CartModalComponent(page);
     }
 
     public async open(pathOrUrl: string): Promise<void> {
@@ -26,4 +31,7 @@ export class BasePage {
     public async waitForTimeout(timeMs: number): Promise<void> {
         await this.page.waitForTimeout(timeMs);
     }
+
+    public readonly categoriesMenuComponents: CategoriesMenuComponents;
+    public readonly cartModalComponent: CartModalComponent;
 }
