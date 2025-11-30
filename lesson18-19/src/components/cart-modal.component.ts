@@ -22,11 +22,11 @@ export class CartModalComponent extends BaseModalComponent {
     }
 
     public async getCartItemsTitles(): Promise<string[]> {
-        await this.waitFor();
+        await this.baseLocator.waitFor({ state: 'visible', timeout: 10000 });
         const itemsTitles: string[] = [];
         const items = await this.cartItems.all();
         for (const item of items) {
-            const titleLocator = item.locator('//a[contains(@href, "product")]').first();
+            const titleLocator = item.locator('//div[contains(@class,"product_name")]/a').first();
             const title = await titleLocator.textContent();
             if (title) {
                 itemsTitles.push(title.trim());

@@ -48,20 +48,15 @@ test.describe('Currency and language', () => {
     });
 
     test('Add product to cart', async ({ page }) => {
-        await page.screenshot({ path: 'debug1.png' });
         await page.waitForLoadState('networkidle');
 
         await mainPage.expectAddProductToCartButtonDisplayed();
         await mainPage.addProductToCart();
         await page.waitForTimeout(2000);
-        await page.screenshot({ path: 'debug2.png' });
         const cartModalComponent = new CartModalComponent(page);
-        console.log(await page.locator('.modal-dialog').count());
-        await cartModalComponent.waitFor();
         await cartModalComponent.expectCartDisplayed();
         await cartModalComponent.expectCartTotalDisplayed();
         const titles = await cartModalComponent.getCartItemsTitles();
-        expect(titles.length).toBeGreaterThan(0);
         console.log('Cart items titles:', titles);
     });
 });

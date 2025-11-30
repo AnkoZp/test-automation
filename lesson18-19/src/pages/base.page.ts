@@ -6,6 +6,9 @@ export class BasePage {
     protected readonly page: Page;
     protected readonly baseUrl?: string;
 
+    public readonly categoriesMenuComponents: CategoriesMenuComponents;
+    public readonly cartModalComponent: CartModalComponent;
+
     public constructor(page: Page, baseUrl?: string) {
         this.page = page;
         this.baseUrl = baseUrl;
@@ -27,11 +30,4 @@ export class BasePage {
     public async getPageURL(): Promise<string> {
         return await this.page.url();
     }
-
-    public async waitForTimeout(timeMs: number): Promise<void> {
-        await this.page.waitForTimeout(timeMs);
-    }
-
-    public readonly categoriesMenuComponents: CategoriesMenuComponents;
-    public readonly cartModalComponent: CartModalComponent;
 }

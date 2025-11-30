@@ -20,7 +20,7 @@ export class MainPage extends BasePage {
         this.currencySelect = page.locator('//form[@name="currencies"]//*[contains(@class,"selectize-input")]');
         this.invalidCredentialsAlert = page.locator('//div[@role="alert"]');
         this.productPrice = page.locator('//p[@class="price"]/span');
-        this.addProductToCartButton = page.locator('//span/a[contains(@class,"added2cart")]');
+        this.addProductToCartButton = page.locator('//div[@class="owl-item active"]//button[contains(@class,"add2cart")]');
     }
 
     public async expectLogIntoAccDisplayed(): Promise<void> {
@@ -61,7 +61,7 @@ export class MainPage extends BasePage {
         await this.page.waitForTimeout(2000);
     }
 
-    public async expectVarningForInvalifLogIn(): Promise<void> {
+    public async expectWarningForInvalidLogIn(): Promise<void> {
         await expect(this.invalidCredentialsAlert).toBeVisible();
     }
 
@@ -71,14 +71,12 @@ export class MainPage extends BasePage {
 
     public async addProductToCart(): Promise<void> {
         const button = this.addProductToCartButton.first();
-        await button.scrollIntoViewIfNeeded();
-        await button.waitFor({ state: 'visible', timeout: 10000 });
-        await this.page.screenshot({ path: 'debug3.png' });
         await button.click();
         await this.page.waitForTimeout(500);
     }
 
     public async expectAddProductToCartButtonDisplayed(): Promise<void> {
-        await expect(this.addProductToCartButton).toBeVisible();
+        const button = this.addProductToCartButton.first();
+        await expect(button).toBeVisible();
     }
 }

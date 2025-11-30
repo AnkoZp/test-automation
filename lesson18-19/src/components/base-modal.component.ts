@@ -15,10 +15,6 @@ export class BaseModalComponent {
         this.baseLocator = page.locator('.modal-dialog');
     }
 
-    public async waitFor(): Promise<void> {
-        await this.baseLocator.waitFor({ state: 'visible', timeout: 10000 });
-    }
-
     public async getTitle(): Promise<string> {
         return await this.title.textContent() as string;
     }
