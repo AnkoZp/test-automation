@@ -46,7 +46,7 @@ test.describe('Log in / log out', () => {
         await expect(await mainPage.getPageURL()).toContain('/login.php?action=process');
         await expect(page).toHaveURL(/\/login\.php\?action=process/);
 
-        await mainPage.expectVarningForInvalifLogIn();
+        await mainPage.expectWarningForInvalidLogIn();
         await mainPage.expectLogIntoAccDisplayed();
     });
 });
