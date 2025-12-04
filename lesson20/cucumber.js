@@ -1,7 +1,8 @@
 module.exports = {
     default: {
         require: [
-            'features/step-definitions/**/*.ts',
+            'src/steps/**/*.ts',
+            'src/hooks/**/*.ts',
             'cucumber.config.ts'
         ],
         requireModule: ['ts-node/register'],
