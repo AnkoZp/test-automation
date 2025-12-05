@@ -1,6 +1,6 @@
 import { When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { CustomWorld } from '../../cucumber.config';
+import { CustomWorld } from '../worlds/custom-world.world';
 import credentials from '../../.auth/credentials.json';
 
 When('I fill in the email field with valid credentials', async function (this: CustomWorld) {

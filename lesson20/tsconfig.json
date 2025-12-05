@@ -2,7 +2,7 @@
   "include": [
     "features/**/*",
     "src/**/*",
-    "cucumber.config.ts"
+    "src/worlds/custom-world.world.ts"
   ],
   "exclude": [
     "eslint.config.mjs",

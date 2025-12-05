@@ -1,8 +1,11 @@
 import { Given, When, Then } from '@cucumber/cucumber';
 import { expect } from '@playwright/test';
-import { CustomWorld } from '../../cucumber.config';
+import { CustomWorld } from '../worlds/custom-world.world';
 
 Given('I am on the main page', async function (this: CustomWorld) {
+    if (!this.page) {
+        throw new Error('Page is not initialized. Ensure the Before hook has run and created a page instance.');
+    }
     await this.mainPage.open('/');
 });
 
