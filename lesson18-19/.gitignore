@@ -11,3 +11,5 @@ node_modules/
 # Allure reporter outputs
 /allure-results/
 /allure-report/
+/.allure/
+/allure-report.html/

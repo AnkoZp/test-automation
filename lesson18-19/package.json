@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
     "test:allure": "npx playwright test",
     "test:allure:open": "npx allure open allure-results",
-    "test:allure:generate": "npx allure generate allure-results -o allure-report --clean"
+    "test:allure:generate": "npx allure generate allure-results -o allure-report --clean",
+    "test:allure:single": "npx allure generate --single-file allure-results -o allure-report.html --clean"
   },
   "keywords": [],
   "author": "",
