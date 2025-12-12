@@ -61,28 +61,4 @@ jobs:
         path: lesson18-19/allure-report.html/
         retention-days: 30
         if-no-files-found: warn
-  allure-pr:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-    needs: test
-    permissions:
-      contents: write
-      actions: write
-      pull-requests: write
-      issues: write
-    steps:
-      - uses: actions/checkout@v4.1.5
-      - name: Download Allure results
-        uses: actions/download-artifact@v4
-        with:
-          name: allure-results
-          path: lesson18-19/allure-results
-      - name: Deploy Reports to GitHub pages on Pull Request
-        uses: cybersokari/allure-deployer-action@v1.9.7
-        with:
-          pr_comment: 'true'
-          target: 'github'
-          allure_results_path: 'lesson18-19/allure-results'
-          show_history: 'true'
-          retries: 5
 
