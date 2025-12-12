@@ -1,0 +1,64 @@
+name: Playwright CI Tests
+on:
+  push:
+    branches: [ main, master, lesson18-19 ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lesson18-19
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: lts/*
+    - name: Install dependencies
+      run: npm ci
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+    - name: Create credentials file
+      run: |
+        mkdir -p .auth
+        node -e "const fs = require('fs'); fs.writeFileSync('.auth/credentials.json', JSON.stringify({email: process.env.EMAIL, password: process.env.PASSWORD}, null, 2));"
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+    - name: Setup Java for Allure
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+    - name: Run Playwright tests
+      run: npm run test:allure
+    - name: Upload Allure results
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-results
+        path: lesson18-19/allure-results/
+        retention-days: 1
+        if-no-files-found: warn
+    - name: Generate Allure report
+      run: npm run test:allure:generate
+      continue-on-error: true
+    - name: Generate Allure single-file report
+      run: npm run test:allure:single
+      continue-on-error: true
+    - name: Upload Allure report
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report
+        path: lesson18-19/allure-report/
+        retention-days: 30
+        if-no-files-found: warn
+    - name: Upload Allure report HTML
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report-html
+        path: lesson18-19/allure-report.html/
+        retention-days: 30
+        if-no-files-found: warn
+
