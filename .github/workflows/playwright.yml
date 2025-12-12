@@ -20,6 +20,13 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+    - name: Create credentials file
+      run: |
+        mkdir -p .auth
+        node -e "const fs = require('fs'); fs.writeFileSync('.auth/credentials.json', JSON.stringify({email: process.env.EMAIL, password: process.env.PASSWORD}, null, 2));"
+      env:
+        EMAIL: ${{ secrets.EMAIL }}
+        PASSWORD: ${{ secrets.PASSWORD }}
     - name: Run Playwright tests
       run: npm run test:allure
     - name: Upload Allure report
