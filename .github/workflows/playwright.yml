@@ -26,11 +26,12 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: allure-report
-        path: allure-report/
+        path: lesson18-19/allure-report/
         retention-days: 30
     - name: Upload Allure report HTML
       uses: actions/upload-artifact@v4
       with:
         name: allure-report-html
-        path: allure-report.html/
+        path: lesson18-19/allure-report.html/
         retention-days: 30
+
